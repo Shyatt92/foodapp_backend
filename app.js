@@ -1,10 +1,12 @@
 const express = require('express')
 require('express-async-errors')
 const app = express()
+const signUpRouter = require('./controllers/signup')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
+const middleware = require('./utils/middleware')
 
 logger.info('Connecting to', config.MONGODB_URI)
 
@@ -18,5 +20,8 @@ mongoose.connect(config.MONGODB_URI, config.mongoOptions)
 
   app.use(cors())
   app.use(express.json())
+  app.use(middleware.requestLogger)
+
+  app.use('/signup', signUpRouter)
 
   module.exports = app
