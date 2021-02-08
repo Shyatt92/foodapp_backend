@@ -31,4 +31,10 @@ signUpRouter.get('/', async (request, response) => {
   response.json(users)
 })
 
+//Temporary route handler to delete all users from api
+signUpRouter.delete('/', async (request, response) => {
+  await User.deleteMany({})
+  console.log('Deleted all Users')
+})
+
 module.exports = signUpRouter

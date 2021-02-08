@@ -2,6 +2,7 @@ const express = require('express')
 require('express-async-errors')
 const app = express()
 const signUpRouter = require('./controllers/signup')
+const loginRouter = require('./controllers/login')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const config = require('./utils/config')
@@ -23,5 +24,6 @@ mongoose.connect(config.MONGODB_URI, config.mongoOptions)
   app.use(middleware.requestLogger)
 
   app.use('/signup', signUpRouter)
+  app.use('/login', loginRouter)
 
   module.exports = app
