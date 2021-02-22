@@ -1,22 +1,24 @@
 const mongoose = require('mongoose')
 
 const recipeSchema = new mongoose.Schema({
-  recipeName: String,
-  images,
-  rating,
-  category,
-  description,
-  source,
-  sourceUrl,
-  prepTime: Number,
-  cookTime: Number,
-  totalTime: Number,
-  servings: Number,
-  difficulty: String,
-  method,
-  ingredients,
-  notes,
-  nutrition
+  name: String,
+  ingredients: [String],
+  instructions: [String],
+  tags: [],
+  time: {
+    prep: String,
+    cook: String,
+    active: String,
+    inactive: String,
+    ready: String,
+    total: String
+  },
+  servings: String,
+  image: String,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 })
 
 module.exports = mongoose.model('Recipe', recipeSchema)

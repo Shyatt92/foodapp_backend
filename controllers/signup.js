@@ -26,7 +26,8 @@ signUpRouter.post('/', async (request, response) => {
 })
 
 signUpRouter.get('/', async (request, response) => {
-  const users = await User.find({})
+  const users = await User
+    .find({}).populate('recipes')
 
   response.json(users)
 })
