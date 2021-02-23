@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt')
-const signUpRouter = require('express').Router()
+const usersRouter = require('express').Router()
 const User = require('../models/user')
 
-signUpRouter.post('/', async (request, response) => {
+usersRouter.post('/', async (request, response) => {
   const body = request.body
 
   if (body.username.length < 3 || body.password.length < 3) {
@@ -25,17 +25,17 @@ signUpRouter.post('/', async (request, response) => {
   response.json(savedUser)
 })
 
-signUpRouter.get('/', async (request, response) => {
+usersRouter.get('/', async (request, response) => {
   const users = await User
-    .find({}).populate('recipes')
+    .find({}).populate('recipes', {name: 1})
 
   response.json(users)
 })
 
 //Temporary route handler to delete all users from api
-signUpRouter.delete('/', async (request, response) => {
+usersRouter.delete('/', async (request, response) => {
   await User.deleteMany({})
   console.log('Deleted all Users')
 })
 
-module.exports = signUpRouter
+module.exports = usersRouter

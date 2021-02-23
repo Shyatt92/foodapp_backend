@@ -19,6 +19,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.14",
     "mongoose-unique-validator": "^2.0.3",
+    "recipe-ingredient-parser-v2": "^1.1.1",
     "recipe-scraper": "^2.0.0"
   },
   "devDependencies": {

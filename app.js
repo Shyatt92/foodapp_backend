@@ -1,7 +1,7 @@
 const express = require('express')
 require('express-async-errors')
 const app = express()
-const signUpRouter = require('./controllers/signup')
+const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const recipeRouter = require('./controllers/recipes')
 const cors = require('cors')
@@ -25,7 +25,7 @@ mongoose.connect(config.MONGODB_URI, config.mongoOptions)
   app.use(middleware.requestLogger)
   app.use(middleware.tokenExtractor)
 
-  app.use('/signup', signUpRouter)
+  app.use('/users', usersRouter)
   app.use('/login', loginRouter)
   app.use('/recipe', recipeRouter)
 

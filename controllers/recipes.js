@@ -4,6 +4,7 @@ const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
 const recipeScraper = require('recipe-scraper')
+const { parse } = require('recipe-ingredient-parser-v2')
 
 recipeRouter.post('/', async (request, response) => {
   const body = request.body.user
@@ -16,6 +17,8 @@ recipeRouter.post('/scrape', async (request, response) => {
   const url = request.body.recipeUrl
 
   let recipe = await recipeScraper(url)
+  const parsedIngredients = recipe.ingredients.map(ingredient => parse(ingredient))
+  recipe.ingredients = parsedIngredients
 
   response.send(recipe)
 })
@@ -23,13 +26,9 @@ recipeRouter.post('/scrape', async (request, response) => {
 recipeRouter.post('/add', async (request, response) => {
   const recipe = request.body.recipe
 
-  const ingredients = recipe.ingredients.filter(ingredient => !!ingredient)
   const instructions = recipe.instructions.filter(instruction => !!instruction)
 
-  recipe.ingredients = ingredients
   recipe.instructions = instructions
-
-  //console.log(request.token)
 
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
   if (!request.token || !decodedToken.id) {
